@@ -1,0 +1,36 @@
+https://istio.io/docs/setup/getting-started/#download
+
+#download istio
+curl -L https://istio.io/downloadIstio | sh -
+
+#deplacer le binaire:
+cd cd istio-1.4.4/bin
+cp istioctl /usr/local/bin/
+
+#vérifier la version:
+istioctl version --short
+
+#vérifier la compatibilité istio avec la version kub:
+istioctl verify-install
+
+#consulter le profile existant:
+istioctl profile list
+
+#install istio avec la version demo:
+istioctl manifest apply --set profile=demo
+
+#consulter ce qu'il y a dans le profile demo:
+istioctl manifest generate --set profile=demo
+
+#exporter istio sur le fichier yaml
+istioctl manifest generate --set profile=demo > /tmp/istio.yaml
+
+#vérification de l'installation istio:
+istioctl verify-install -f /tmp/istio.yaml
+
+#voir dashboard existant
+istioctl dashboard
+istioctl dashboard kiali
+
+#supression istio:
+kubectl delete -f /tmp/istio.yaml
